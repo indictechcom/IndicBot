@@ -20,7 +20,7 @@ else:
         if sys.argv[1] == 'template_subs':
             # Run the script
             run_template_subs(SESSION)
-            print("Done :)")
+            print("\nDone :)")
 
             # Clear the session
             SESSION.cookies.clear()

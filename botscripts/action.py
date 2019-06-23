@@ -37,7 +37,7 @@ class WikiAction():
         if 'parse' in data:
             return data['parse']['wikitext']['*']
         else:
-            print(page + ' - ' + data['error']['info'])
+            print('\n' + page + ' - ' + data['error']['info'])
             return None
 
 
