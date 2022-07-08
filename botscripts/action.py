@@ -19,7 +19,10 @@ class WikiAction():
             }
         )
         data = response.json()
-        return data['query']['tokens']['csrftoken']
+        try:
+            return data['query']['tokens']['csrftoken']
+        except:
+           return  None
 
     def get_pagecontent(self, page):
         """ Function to get the wikitext of Wikipage """
@@ -34,10 +37,13 @@ class WikiAction():
             }
         )
         data = response.json()
-        if 'parse' in data:
-            return data['parse']['wikitext']['*']
-        else:
-            print('\n' + page + ' - ' + data['error']['info'])
+        try:
+            if 'parse' in data:
+                return data['parse']['wikitext']['*']
+            else:
+                print('\n' + page + ' - ' + data['error']['info'])
+                return None
+        except:
             return None
 
 
@@ -58,6 +64,9 @@ class WikiAction():
             }
         )
         data = response.json()
-        if data['edit']['result'] == 'Success':
-            print(page + ' - ' + 'Changes Done!')
+        try:
+            if data['edit']['result'] == 'Success':
+                print(page + ' - ' + 'Changes Done!')
+        except:
+            print(page + ' - ' + 'Changes Failed!')
 
