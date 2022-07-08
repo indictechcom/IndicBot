@@ -20,9 +20,8 @@ else:
         if sys.argv[1] == 'template_subs':
             # Run the script
             run_template_subs(SESSION)
-            print("\nDone :)")
-
-            # Clear the session
-            SESSION.cookies.clear()
+            print("\nDone :)")            
         else:
             print("Wrong script name!")
+# Clear the session
+SESSION.cookies.clear()
