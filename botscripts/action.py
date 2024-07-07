@@ -21,8 +21,9 @@ class WikiAction():
         data = response.json()
         try:
             return data['query']['tokens']['csrftoken']
-        except:
-           return  None
+        except KeyError:
+            print("Error: CSRF token not found in the response.")
+            return  None
 
     def get_pagecontent(self, page):
         """ Function to get the wikitext of Wikipage """
@@ -43,7 +44,8 @@ class WikiAction():
             else:
                 print('\n' + page + ' - ' + data['error']['info'])
                 return None
-        except:
+        except KeyError:
+            print(f"Error: Unexpected response format for page '{page}'.")
             return None
 
 

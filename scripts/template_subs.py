@@ -52,7 +52,7 @@ def run_template_subs(session):
                     if oldtext != text:
 
                         # Make and print the diff
-                        print('\nDiff of Wikipage - ' + wikipage)
+                        print(f"\nDiff of Wikipage - {wikipage}")
                         diff(oldtext, text)
 
                         if apply_all is False:

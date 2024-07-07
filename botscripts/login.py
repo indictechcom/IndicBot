@@ -46,7 +46,7 @@ def login():
     data = response.json()
 
     if data['clientlogin']['status'] == 'PASS':
-        print('Login success! Welcome, ' + data['clientlogin']['username'] + '!')
+        print(f'Login success! Welcome, {data["clientlogin"]["username"]}!')
         return Ses
     else:
         print('Oops! Something went wrong -- ' + data['clientlogin']['messagecode'])

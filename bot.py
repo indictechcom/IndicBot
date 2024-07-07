@@ -14,7 +14,7 @@ else:
 
     # Check whether the scriptname exist in the argument or not
     if len(sys.argv) < 2:
-        print('Script Name is missing: Try \'python3 bot.py scriptname\'')
+        print(f"Script Name is missing: Try 'python3 bot.py scriptname'")
 
     else:
         if sys.argv[1] == 'template_subs':
