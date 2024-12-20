@@ -5,39 +5,46 @@ from botscripts.diff import diff
 import xlrd
 import mwparserfromhell as mw
 import time
+from requests import Session
+from typing import Any
 
-
-def run_template_subs(session):
-    """ Script to add or replace template parameter"""
+def run_template_subs(session: Session) -> None:
+    """ 
+    Script to add or replace template parameter
+    Args:
+        session (Session): A requests.Session object for making authenticated requests to the Wikipedia API.
+    Returns:
+        None
+    """
 
     # Get the Filename from user
-    xls_filename = input("Enter the Excel filename: ")
+    xls_filename: str = input("Enter the Excel filename: ")
 
     #  Read the Excel File
-    wb = xlrd.open_workbook(xls_filename)
-    sheet = wb.sheet_by_index(0)
+    wb: Any = xlrd.open_workbook(xls_filename)
+    sheet: Any = wb.sheet_by_index(0)
     sheet.cell_value(0, 0)
 
     # Create WikiAction Object for making action
-    action = WikiAction(session)
+    action: WikiAction = WikiAction(session)
 
     # Variable to check user all response
-    apply_all = False
+    apply_all: bool = False
 
     for i in range(sheet.nrows - 1):
         # Get the Wikipage name from the Sheet's cell
-        wikipage = sheet.cell_value(i + 1, 0)
+        wikipage: Any = sheet.cell_value(i + 1, 0)
 
         # Get the wikitext of Wikipage
-        oldtext = action.get_pagecontent(wikipage)
+        oldtext: str|None = action.get_pagecontent(wikipage)
 
         if oldtext is not None:
-            text = mw.parse(oldtext)
+            text: Any = mw.parse(oldtext)
 
             # Get the template name, parameter and its value
-            param = sheet.cell_value(i + 1, 1)
-            value = sheet.cell_value(i + 1, 2)
-            template_name = sheet.cell_value(i + 1, 3)
+            param: Any = sheet.cell_value(i + 1, 1)
+            value: Any = sheet.cell_value(i + 1, 2)
+            template_name: Any = sheet.cell_value(i + 1, 3)
 
             for template in text.filter_templates():
                 if template.name.matches(template_name):
@@ -57,7 +64,7 @@ def run_template_subs(session):
 
                         if apply_all is False:
                             # User prompt
-                            res = input("Do you want the chagnes (Yes - y, No - n, All - a, Quit- q)? ").lower()
+                            res: str = input("Do you want the chagnes (Yes - y, No - n, All - a, Quit- q)? ").lower()
 
                             # Edit the page on y or yes response
                             if (res == 'y') or (res == 'yes'):

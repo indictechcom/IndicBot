@@ -1,16 +1,22 @@
 # -*- coding: utf-8 -*-
-
 import requests
 import config
 import getpass
+from typing import Optional
 
-Ses = requests.Session()
+Ses: requests.Session = requests.Session()
 
 
-def fetch_login_token():
-    """ Fetch login token via `tokens` module """
+def fetch_login_token() -> str:
+    """ 
+    Fetch login token via `tokens` module 
+    Args:
+        None
+    Returns:
+        str: Returns the login token
+    """
 
-    response = Ses.get(
+    response: requests.Response = Ses.get(
         url=config.WIKI_API_ENDPOINT,
         params= {
             'action': "query",
@@ -19,21 +25,27 @@ def fetch_login_token():
             'format': "json"
         }
     )
-    data = response.json()
+    data: dict = response.json()
     return data['query']['tokens']['logintoken']
 
 
-def login():
-    """ Send a post request along with login token """
+def login() -> Optional[requests.Session]:
+    """ 
+    Send a post request along with login token 
+    Args:
+        None
+    Returns:
+        Optional[requests.Session]: Returns the session object if successful, None otherwise.
+    """
 
-    login_token = fetch_login_token()
+    login_token: str  = fetch_login_token()
 
     # Get the password from user
-    password = getpass.getpass()
+    password: str = getpass.getpass()
 
-    response = Ses.post(
+    response: requests.Response = Ses.post(
         config.WIKI_API_ENDPOINT,
-        data={
+        data ={
             'action': "clientlogin",
             'username': config.USERNAME,
             'password': password,
@@ -43,7 +55,7 @@ def login():
         }
     )
 
-    data = response.json()
+    data: dict = response.json()
 
     if data['clientlogin']['status'] == 'PASS':
         print('Login success! Welcome, ' + data['clientlogin']['username'] + '!')

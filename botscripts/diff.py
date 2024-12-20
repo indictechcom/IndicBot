@@ -3,11 +3,18 @@
 import difflib
 
 
-def diff(oldtext, newtext):
-    """ Diff the text """
+def diff(oldtext: str, newtext: str) -> None:
+    """ 
+    Diff the text 
+    Args:
+        oldtext (str): The old text
+        newtext (str): The new text
+    Returns:
+        None
+    """
 
-    oldtext_lines = oldtext.splitlines()
-    newtext_lines = newtext.splitlines()
+    oldtext_lines: list  = oldtext.splitlines()
+    newtext_lines: list = newtext.splitlines()
 
     for line in difflib.unified_diff(oldtext_lines, newtext_lines,
                                      fromfile='Before', tofile='After',
